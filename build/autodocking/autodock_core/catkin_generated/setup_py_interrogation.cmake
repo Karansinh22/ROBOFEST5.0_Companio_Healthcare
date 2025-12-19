@@ -1,0 +1,7 @@
+set(autodock_core_SETUP_PY_SETUP_MODULE "setuptools")
+set(autodock_core_SETUP_PY_VERSION "0.2.0")
+set(autodock_core_SETUP_PY_SCRIPTS "")
+set(autodock_core_SETUP_PY_PACKAGES "autodock_core")
+set(autodock_core_SETUP_PY_PACKAGE_DIRS "scripts/autodock_core")
+set(autodock_core_SETUP_PY_MODULES "")
+set(autodock_core_SETUP_PY_MODULE_DIRS "")

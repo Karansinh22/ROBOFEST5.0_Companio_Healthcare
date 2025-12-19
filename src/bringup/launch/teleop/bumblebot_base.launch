@@ -1,0 +1,38 @@
+<launch>
+  <!-- Motor Driver Interface -->
+  <node name="motor_driver_ros_interface" pkg="your_motor_package" type="motor_driver_ros_interface.py" output="screen">
+    <param name="left_port" value="/dev/left_wheel"/>
+    <param name="right_port" value="/dev/right_wheel"/>
+    <param name="left_slave_id" value="7"/>
+    <param name="right_slave_id" value="7"/>
+  </node>
+
+  <!-- Twist to Motors -->
+  <node name="twist_to_motors" pkg="differential_drive" type="twist_to_motors.py" output="screen">
+    <param name="base_width" value="0.22"/>
+    <param name="rate" value="50"/>
+  </node>
+
+  <!-- Odometry -->
+  <node name="diff_tf" pkg="differential_drive" type="diff_tf.py" output="screen">
+    <param name="rate" value="50"/>
+    <param name="ticks_meter" value="607549"/>
+    <param name="base_width" value="0.22"/>
+    <param name="base_frame_id" value="base_footprint"/>
+    <param name="odom_frame_id" value="odom"/>
+  </node>
+
+  <!-- RPLidar -->
+    <node name="rplidarNode" pkg="rplidar_ros" type="rplidarNode" output="screen">
+    <param name="serial_port" type="string" value="/dev/ttyUSB2"/>
+    <param name="serial_baudrate" type="int" value="115200"/>
+    <param name="frame_id" type="string" value="laser"/>
+    <param name="inverted" type="bool" value="false"/>
+    <param name="angle_compensate" type="bool" value="true"/>
+  
+
+  <!-- Robot Description (if you have URDF) -->
+  <!-- <param name="robot_description" command="$(find xacro)/xacro $(find bumblebot_description)/urdf/bumblebot.xacro"/> -->
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/> -->
+
+</launch>

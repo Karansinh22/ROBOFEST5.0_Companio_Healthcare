@@ -1,0 +1,8 @@
+prefix=/root/BumbleBot_WS/install
+
+Name: autodock_sim
+Description: Description of autodock_sim
+Version: 2.5.21
+Cflags: 
+Libs: -L${prefix}/lib -lChargingStationPlugin
+Requires: roslib roscpp geometry_msgs std_srvs tf rosgraph_msgs dynamic_reconfigure std_msgs gazebo_msgs

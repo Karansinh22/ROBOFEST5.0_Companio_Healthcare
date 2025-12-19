@@ -1,0 +1,8 @@
+prefix=/root/BumbleBot_WS/install
+
+Name: robot_upstart
+Description: Description of robot_upstart
+Version: 0.4.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

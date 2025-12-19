@@ -1,0 +1,2 @@
+autodocking/autodock_core:autodocking/autodock_examples:autodocking/autodock_sim:bringup:custom_scripts:differential_driver:learning_joy:my_motor_controller:my_robot_model:rf2o_laser_odometry:robot_pose_ekf:robot_upstart:rplidar_ros:turtlebot_teleop:web_interface
+-DCATKIN_DEVEL_PREFIX=/root/BumbleBot_WS/devel -DCMAKE_INSTALL_PREFIX=/root/BumbleBot_WS/install -G Unix Makefiles

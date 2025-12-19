@@ -1,0 +1,8 @@
+prefix=/root/BumbleBot_WS/install
+
+Name: my_robot_model
+Description: Description of my_robot_model
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

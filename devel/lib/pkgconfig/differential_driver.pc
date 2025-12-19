@@ -1,0 +1,8 @@
+prefix=/root/BumbleBot_WS/devel
+
+Name: differential_driver
+Description: Description of differential_driver
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
