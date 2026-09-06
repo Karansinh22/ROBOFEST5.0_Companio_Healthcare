@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- move_base with the DWA local planner. Rotate/clear recovery behaviours are
+       disabled on purpose: the chassis oscillated with them in narrow corridors. -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <rosparam file="$(find companio_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find companio_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find companio_navigation)/config/local_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find companio_navigation)/config/global_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find companio_navigation)/config/dwa_local_planner.yaml" command="load"/>
+
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+    <param name="recovery_behavior_enabled" value="false"/>
+    <param name="clearing_rotation_allowed" value="false"/>
+    <param name="planner_patience" value="10.0"/>
+    <param name="controller_patience" value="15.0"/>
+  </node>
+</launch>

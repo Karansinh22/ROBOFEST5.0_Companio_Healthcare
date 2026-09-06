@@ -1,0 +1,18 @@
+<launch>
+  <!-- Camera Publisher Node -->
+  <node name="camera_publisher" pkg="companio_zone_detection" type="camera_publisher.py" output="screen">
+    <param name="camera_device" value="/dev/video20" />
+    <param name="width" value="640" />
+    <param name="height" value="480" />
+    <param name="fps" value="30" />
+  </node>
+
+  <!-- Zone Detector Node -->
+  <node name="zone_detector" pkg="companio_zone_detection" type="zone_detector.py" output="screen">
+    <param name="debug" value="true" />
+    <param name="safe_threshold" value="100" />
+    <param name="infection_threshold" value="100" />
+    <param name="print_interval" value="10" />
+  </node>
+</launch>
+

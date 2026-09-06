@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+  <!--
+    SLAM mapping session.
+      * drives with the keyboard in this terminal (keyboard:=true)
+      * records rooms while mapping (location manager, saved to
+        companio_description/maps/<map_name>.locations.yaml)
+      * RViz mapping view + web dashboard
+    When the map is complete run:  ./scripts/save_map.sh <map_name>
+  -->
+  <arg name="map_name" default="hospital_map"/>
+  <arg name="keyboard" default="true"/>
+  <arg name="rviz" default="true"/>
+  <arg name="web" default="true"/>
+
+  <include file="$(find companio_bringup)/launch/base.launch"/>
+  <include file="$(find companio_navigation)/launch/slam_gmapping.launch"/>
+
+  <include file="$(find companio_navigation)/launch/location_manager.launch">
+    <arg name="map_name" value="$(arg map_name)"/>
+    <arg name="navigation_enabled" value="false"/>
+  </include>
+
+  <node if="$(arg keyboard)" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py"
+        name="teleop_keyboard" output="screen"/>
+
+  <include if="$(arg web)" file="$(find companio_web)/launch/web.launch"/>
+
+  <include if="$(arg rviz)" file="$(find companio_description)/launch/rviz.launch">
+    <arg name="view" value="mapping"/>
+  </include>
+</launch>

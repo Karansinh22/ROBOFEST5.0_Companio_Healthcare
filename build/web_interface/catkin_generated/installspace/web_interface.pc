@@ -1,8 +1,0 @@
-prefix=/root/BumbleBot_WS/install
-
-Name: web_interface
-Description: Description of web_interface
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

@@ -1,0 +1,6 @@
+# Generic request that refers to a saved location by name
+# (used by go_to, delete and localize_at).
+string name
+---
+bool success
+string message

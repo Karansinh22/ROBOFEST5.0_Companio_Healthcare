@@ -1,8 +1,0 @@
-prefix=/root/BumbleBot_WS/devel
-
-Name: autodock_examples
-Description: Description of autodock_examples
-Version: 0.2.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: message_runtime rospy

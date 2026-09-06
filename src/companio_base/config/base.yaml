@@ -1,0 +1,25 @@
+# Companio mobile base parameters (values calibrated on the real chassis).
+
+motor_driver:
+  left_port: /dev/motor_left
+  right_port: /dev/motor_right
+  left_slave_id: 2
+  right_slave_id: 5
+  velocity_scale: 19.0        # multiplies wheel targets before RPM conversion
+  gear_ratio: 100.0           # RMCS-2303 gearbox ratio used for rad/s -> RPM
+  deadband: 0.02              # |target| below this brakes the motor
+  command_settle_delay: 0.02  # seconds to wait after each Modbus command
+  encoder_rate: 20.0          # Hz, encoder polling / publishing rate
+
+cmd_vel_to_wheels:
+  base_width: 0.95            # effective track width used for cmd_vel mixing
+  rate: 50
+  timeout_ticks: 2
+  publish_zero_on_timeout: false
+
+wheel_odometry:
+  base_width: 0.95            # must match cmd_vel_to_wheels/base_width
+  ticks_meter: 607549         # encoder ticks per metre of travel
+  rate: 50
+  base_frame_id: base_footprint
+  odom_frame_id: odom

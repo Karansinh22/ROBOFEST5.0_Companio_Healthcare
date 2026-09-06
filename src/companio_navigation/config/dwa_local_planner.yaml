@@ -1,0 +1,37 @@
+DWAPlannerROS:
+  # Robot Configuration
+  max_vel_x: 0.3  # Adjust based on motor max speed
+  min_vel_x: 0.0  # MUST be 0 for diff-drive to not back up and spin in place!
+  
+  max_vel_y: 0.0  # Differential drive (non-holonomic)
+  min_vel_y: 0.0
+  
+  max_vel_trans: 0.3
+  min_vel_trans: 0.05
+  
+  max_vel_theta: 0.5  # Slowing down rotation capability
+  min_vel_theta: 0.1
+  
+  acc_lim_x: 0.5
+  acc_lim_y: 0.0
+  acc_lim_theta: 0.5
+  
+  # Goal Tolerance
+  xy_goal_tolerance: 0.10  # 10 cm
+  yaw_goal_tolerance: 0.15  # ~8.6 degrees
+  latch_xy_goal_tolerance: false
+  
+  # Trajectory Scoring
+  path_distance_bias: 32.0
+  goal_distance_bias: 24.0
+  occdist_scale: 0.01
+  
+  # Forward Simulation
+  sim_time: 1.5
+  sim_granularity: 0.025
+  vx_samples: 10
+  vy_samples: 0
+  vth_samples: 20
+  
+  # Oscillation Prevention
+  oscillation_reset_dist: 0.05

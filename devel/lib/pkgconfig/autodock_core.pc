@@ -1,8 +1,0 @@
-prefix=/root/BumbleBot_WS/devel
-
-Name: autodock_core
-Description: Description of autodock_core
-Version: 0.2.0
-Cflags: -I/root/BumbleBot_WS/devel/include
-Libs: -L${prefix}/lib 
-Requires: message_runtime roscpp actionlib

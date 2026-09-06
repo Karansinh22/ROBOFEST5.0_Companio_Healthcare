@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>companio_web</name>
+  <version>1.0.0</version>
+  <description>
+    Web telemetry and control dashboard for the Companio healthcare robot: live map,
+    robot pose and laser, saved rooms (save / go / delete), navigation status, manual
+    drive, arm and camera panels. Served by a small HTTP server and rosbridge.
+  </description>
+  <maintainer email="karansinhdesai04@gmail.com">Karansinh Desai</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <exec_depend>rosbridge_server</exec_depend>
+  <exec_depend>companio_navigation</exec_depend>
+</package>

@@ -1,0 +1,32 @@
+<launch>
+    <!-- Companio camera Destination Follower -->
+    <arg name="destination"        default=""/> <!-- If empty, script will ask for input -->
+    <arg name="base_speed"         default="0.315"/>
+    <arg name="black_threshold"    default="55"/>
+    <arg name="roi_top_frac"       default="0.40"/>
+    <arg name="show_window"        default="true"/>
+
+    <!-- RealSense D415 Camera -->
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="enable_color"  value="true"/>
+        <arg name="color_width"   value="640"/>
+        <arg name="color_height"  value="480"/>
+        <arg name="color_fps"     value="30"/>
+        <arg name="enable_depth"  value="false"/>
+    </include>
+
+    <!-- Destination Follower Node -->
+    <node name="ai_destination_follower" pkg="companio_line_follower"
+          type="ai_destination_follower.py" output="screen">
+        <param name="destination"        value="$(arg destination)" if="$(eval arg('destination') != '')"/>
+        <param name="base_speed"         value="$(arg base_speed)"/>
+        <param name="black_threshold"    value="$(arg black_threshold)"/>
+        <param name="roi_top_frac"       value="$(arg roi_top_frac)"/>
+        <param name="show_window"        value="$(arg show_window)"/>
+    </node>
+
+    <!-- Motor Driver -->
+    <node name="motor_driver" pkg="companio_base"
+          type="motor_driver_node.py" output="screen">
+    </node>
+</launch>

@@ -1,0 +1,54 @@
+<launch>
+    <!-- ============================================================
+         Companio camera Line Follower — Direct Motor Control
+         Camera → line detection → teleop key logic → motors
+         Calibrated to robot physical dimensions:
+           Track width  : 16 cm (0.16 m)
+           Camera height: 21 cm
+           Camera offset: +7 cm ahead of wheel axle
+         ============================================================ -->
+
+    <!-- Tunable parameters -->
+    <arg name="base_speed"         default="0.315"/> <!-- vtarget units (matches teleop) -->
+    <arg name="black_threshold"    default="55"/>    <!-- 0-255: pixels darker = line -->
+    <arg name="roi_top_frac"       default="0.40"/>  <!-- look further ahead (was 0.5) to react to curves sooner -->
+    <arg name="slight_thresh"      default="0.05"/>  <!-- |centroid| below → straight (reduced to start curve turns earlier) -->
+    <arg name="hard_thresh"        default="0.35"/>  <!-- |centroid| above → rotate -->
+    <arg name="show_window"        default="true"/>  <!-- Live OpenCV debug window -->
+    <arg name="turn_speed"         default="0.20"/>  <!-- speed for 90° rotation -->
+    <arg name="curve_turn_speed"   default="0.55"/>  <!-- proportional angular steering for curves -->
+    <arg name="turn_duration_s"    default="2.5"/>   <!-- 90° turn time (increased) -->
+    <arg name="approach_duration_s" default="0.65"/> <!-- forward nudge before turning -->
+    <arg name="recover_duration_s" default="2.0"/>   <!-- search time after turn -->
+
+    <!-- RealSense D415 Camera -->
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="enable_color"  value="true"/>
+        <arg name="color_width"   value="640"/>
+        <arg name="color_height"  value="480"/>
+        <arg name="color_fps"     value="30"/>
+        <arg name="enable_depth"  value="false"/>
+    </include>
+
+    <!-- All-in-one: detection + teleop logic + direct motor publishing -->
+    <node name="ai_line_follower_direct" pkg="companio_line_follower"
+          type="ai_line_follower_direct.py" output="screen">
+        <param name="base_speed"         value="$(arg base_speed)"/>
+        <param name="black_threshold"    value="$(arg black_threshold)"/>
+        <param name="roi_top_frac"       value="$(arg roi_top_frac)"/>
+        <param name="slight_thresh"      value="$(arg slight_thresh)"/>
+        <param name="hard_thresh"        value="$(arg hard_thresh)"/>
+        <param name="show_window"        value="$(arg show_window)"/>
+        <param name="turn_speed"         value="$(arg turn_speed)"/>
+        <param name="curve_turn_speed"   value="$(arg curve_turn_speed)"/>
+        <param name="turn_duration_s"    value="$(arg turn_duration_s)"/>
+        <param name="approach_duration_s" value="$(arg approach_duration_s)"/>
+        <param name="recover_duration_s" value="$(arg recover_duration_s)"/>
+    </node>
+
+    <!-- Actual Motor Driver (lwheel_vtarget / rwheel_vtarget → hardware) -->
+    <node name="motor_driver" pkg="companio_base"
+          type="motor_driver_node.py" output="screen">
+    </node>
+
+</launch>

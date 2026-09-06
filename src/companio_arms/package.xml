@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>companio_arms</name>
+  <version>1.0.0</version>
+  <description>
+    Dual 4-DOF servo arm control for the Companio healthcare robot: PCA9685 joint
+    controllers with safety limits, analytic and numerical inverse kinematics,
+    pick sequences, camera pan/tilt tower control and gripper vision.
+  </description>
+  <maintainer email="karansinhdesai04@gmail.com">Karansinh Desai</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <exec_depend>python3-smbus</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+</package>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Vision-triggered pick: both arm controllers, the pick sequences and the gripper camera node. -->
+  <include file="$(find companio_arms)/launch/arms.launch">
+    <arg name="tower" value="false"/>
+  </include>
+  <node pkg="companio_arms" type="gripper_vision_node.py" name="gripper_vision" output="screen"/>
+</launch>

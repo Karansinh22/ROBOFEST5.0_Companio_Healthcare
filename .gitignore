@@ -1,0 +1,27 @@
+# catkin build artefacts
+build/
+devel/
+install/
+logs/
+.catkin_workspace
+.catkin_tools/
+src/CMakeLists.txt
+
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# editors / OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# runtime junk
+core.*
+*.log
+*.tmp
+frames.gv
+frames.pdf

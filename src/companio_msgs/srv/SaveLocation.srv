@@ -1,0 +1,11 @@
+# Save a named location on the current map.
+# name            display name of the location ("" = auto-generate "Location N")
+# use_robot_pose  true  -> store the robot's current pose in the map frame
+#                 false -> store 'pose' (x, y in metres, theta in radians)
+string name
+bool use_robot_pose
+geometry_msgs/Pose2D pose
+---
+bool success
+string message
+string name

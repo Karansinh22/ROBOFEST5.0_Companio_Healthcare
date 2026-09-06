@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- mode: teleop (drive by voice) | navigator (go to saved rooms by voice) -->
+  <arg name="mode" default="navigator"/>
+  <arg name="audio_device" default="plughw:2,0"/>
+  <node if="$(eval arg('mode') == 'teleop')" pkg="companio_voice" type="voice_teleop.py" name="voice_teleop" output="screen"/>
+  <node if="$(eval arg('mode') == 'navigator')" pkg="companio_voice" type="voice_navigator.py" name="voice_navigator" output="screen">
+    <param name="audio_device" value="$(arg audio_device)"/>
+  </node>
+</launch>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>companio_bringup</name>
+  <version>1.0.0</version>
+  <description>
+    Top-level launch files for the Companio healthcare robot: base bring-up,
+    keyboard teleoperation, SLAM mapping with room recording, autonomous
+    navigation with the web dashboard, arms and camera.
+  </description>
+  <maintainer email="karansinhdesai04@gmail.com">Karansinh Desai</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <exec_depend>companio_base</exec_depend>
+  <exec_depend>companio_description</exec_depend>
+  <exec_depend>companio_navigation</exec_depend>
+  <exec_depend>companio_web</exec_depend>
+  <exec_depend>companio_arms</exec_depend>
+  <exec_depend>rplidar_ros</exec_depend>
+  <exec_depend>teleop_twist_keyboard</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+</package>

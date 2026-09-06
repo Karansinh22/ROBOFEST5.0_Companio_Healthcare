@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <!--
+    Companio hardware bring-up: wheel motors, odometry, RPLidar and the robot model.
+    Everything else (teleop, mapping, navigation) builds on top of this file.
+  -->
+  <arg name="lidar_port" default="/dev/rplidar"/>
+  <arg name="lidar_baudrate" default="115200"/>   <!-- RPLidar A1/A2 -->
+  <arg name="base_config" default="$(find companio_base)/config/base.yaml"/>
+
+  <!-- Motors, cmd_vel mixing, wheel odometry (odom -> base_footprint) -->
+  <include file="$(find companio_base)/launch/base_driver.launch">
+    <arg name="config" value="$(arg base_config)"/>
+  </include>
+
+  <!-- RPLidar -->
+  <node name="rplidarNode" pkg="rplidar_ros" type="rplidarNode" output="screen">
+    <param name="serial_port" type="string" value="$(arg lidar_port)"/>
+    <param name="serial_baudrate" type="int" value="$(arg lidar_baudrate)"/>
+    <param name="frame_id" type="string" value="laser"/>
+    <param name="inverted" type="bool" value="false"/>
+    <param name="angle_compensate" type="bool" value="true"/>
+  </node>
+
+  <!-- URDF + TF tree -->
+  <include file="$(find companio_description)/launch/description.launch"/>
+</launch>

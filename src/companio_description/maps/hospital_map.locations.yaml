@@ -1,0 +1,17 @@
+# Named locations recorded on hospital_map (metres / radians, map frame).
+# Managed by companio_navigation/location_manager.py - edit by hand only when the robot is stopped.
+map: hospital_map
+frame_id: map
+locations:
+- name: Home
+  x: 0.6437
+  y: 0.0356
+  yaw: -1.3411
+- name: Room 1
+  x: 0.9333
+  y: -1.5982
+  yaw: -1.481
+- name: Room 2
+  x: 0.4684
+  y: -2.4422
+  yaw: -2.1072

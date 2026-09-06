@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>companio_line_follower</name>
+  <version>1.0.0</version>
+  <description>
+    Line-following behaviours for the Companio healthcare robot: 5-channel IR sensor
+    following with junction/location detection (GPIO), and camera based following with
+    corner handling and QR-code destination routing (Intel RealSense, optional Hailo NPU).
+  </description>
+  <maintainer email="karansinhdesai04@gmail.com">Karansinh Desai</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>cv_bridge</depend>
+  <exec_depend>companio_base</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+</package>

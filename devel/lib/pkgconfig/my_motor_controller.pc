@@ -1,8 +1,0 @@
-prefix=/root/BumbleBot_WS/devel
-
-Name: my_motor_controller
-Description: Description of my_motor_controller
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

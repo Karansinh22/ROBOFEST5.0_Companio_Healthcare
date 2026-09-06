@@ -1,0 +1,15 @@
+# Companio USB device rules (install with: sudo ./scripts/install_udev_rules.sh)
+#
+# All three serial devices are CP210x adapters, so they are told apart by the
+# physical USB-hub port they are plugged into (ID_PATH).  Verify the mapping with
+# scripts/identify_motors.py after re-plugging the hub.
+#
+#   hub port 1.1 -> /dev/rplidar      RPLidar A1
+#   hub port 1.2 -> /dev/motor_left   Rhino RMCS-2303, Modbus slave 2
+#   hub port 1.4 -> /dev/motor_right  Rhino RMCS-2303, Modbus slave 5
+#
+# The Intel RealSense D415 is a USB video device and needs no rule.
+
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_PATH}=="platform-xhci-hcd.0-usb-0:1.1:1.0", MODE="0666", SYMLINK+="rplidar"
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_PATH}=="platform-xhci-hcd.0-usb-0:1.2:1.0", MODE="0666", SYMLINK+="motor_left"
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_PATH}=="platform-xhci-hcd.0-usb-0:1.4:1.0", MODE="0666", SYMLINK+="motor_right"

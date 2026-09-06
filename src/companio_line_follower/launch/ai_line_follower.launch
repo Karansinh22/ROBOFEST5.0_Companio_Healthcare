@@ -1,0 +1,70 @@
+<launch>
+    <!-- ============================================================
+         Companio camera Line Follower
+         Camera → Hailo NPU (preprocess) → PID → cmd_vel → Motors
+         ============================================================ -->
+
+    <!-- Tunable parameters -->
+    <arg name="base_speed"         default="0.08"/>   <!-- m/s forward speed (lower = more time to correct) -->
+    <arg name="kp"                 default="1.2"/>    <!-- PID proportional -->
+    <arg name="ki"                 default="0.0"/>    <!-- PID integral -->
+    <arg name="kd"                 default="0.15"/>   <!-- PID derivative -->
+    <arg name="black_threshold"    default="55"/>     <!-- 0-255: pixels darker than this = line -->
+    <arg name="roi_top_frac"       default="0.50"/>   <!-- Top of ROI as fraction of image height -->
+    <arg name="input_width"        default="320"/>    <!-- Hailo preprocessing width -->
+    <arg name="input_height"       default="240"/>    <!-- Hailo preprocessing height -->
+    <arg name="min_line_width_px"  default="12"/>     <!-- Min blob width in px to be a valid line -->
+    <arg name="min_contour_area"   default="150"/>    <!-- Min blob area in px² to be a valid line -->
+    <arg name="show_window"        default="true"/>   <!-- Show live OpenCV debug window -->
+
+    <!-- RealSense D415 Camera Node -->
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="enable_color"  value="true"/>
+        <arg name="color_width"   value="640"/>
+        <arg name="color_height"  value="480"/>
+        <arg name="color_fps"     value="30"/>
+        <arg name="enable_depth"  value="false"/>
+    </include>
+
+    <!-- Hailo Line Detector Node (NPU preprocessing + centroid detection) -->
+    <node name="hailo_line_detector" pkg="companio_line_follower"
+          type="hailo_line_detector_node.py" output="screen">
+        <param name="black_threshold"   value="$(arg black_threshold)"/>
+        <param name="roi_top_frac"      value="$(arg roi_top_frac)"/>
+        <param name="input_width"       value="$(arg input_width)"/>
+        <param name="input_height"      value="$(arg input_height)"/>
+        <param name="min_line_width_px" value="$(arg min_line_width_px)"/>
+        <param name="min_contour_area"  value="$(arg min_contour_area)"/>
+        <param name="show_window"       value="$(arg show_window)"/>
+    </node>
+
+    <!-- Line Follower PID Node -->
+    <node name="line_follower" pkg="companio_line_follower"
+          type="line_follower_node.py" output="screen">
+        <param name="kp"         value="$(arg kp)"/>
+        <param name="ki"         value="$(arg ki)"/>
+        <param name="kd"         value="$(arg kd)"/>
+        <param name="base_speed" value="$(arg base_speed)"/>
+    </node>
+
+    <!-- Motor Control Bridge (cmd_vel → lwheel_vtarget / rwheel_vtarget) -->
+    <node name="motor_control_node" pkg="companio_line_follower"
+          type="motor_control_node.py" output="screen">
+        <param name="wheel_base"  value="0.2"/>
+        <param name="max_speed"   value="50.0"/>
+        <!-- speed_scale converts m/s → vtarget units.
+             vtarget is multiplied by 19 internally in motor_driver_ros_interface.
+             scale=10 means base_speed=0.08 → vtarget=0.8 → motor~15 units  (gentle forward)
+             Angular correction for centering at centroid=0.2:
+               delta_vtarget = 0.2 * 1.2 * 1.5 * 0.1 * 10 = 0.36 → motor diff ~7 units (visible!) -->
+        <param name="speed_scale" value="10.0"/>
+    </node>
+
+    <!-- *** ACTUAL MOTOR DRIVER ***
+         Subscribes to /lwheel_vtarget and /rwheel_vtarget and
+         drives the Rhino RMCS-2303 motors over serial. -->
+    <node name="motor_driver" pkg="companio_base"
+          type="motor_driver_node.py" output="screen">
+    </node>
+
+</launch>

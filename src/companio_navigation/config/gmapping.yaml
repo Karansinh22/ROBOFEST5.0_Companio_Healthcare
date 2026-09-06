@@ -1,0 +1,20 @@
+# GMapping SLAM parameters (tuned for the RPLidar A1 on Companio)
+base_frame: base_footprint
+odom_frame: odom
+map_frame: map
+map_update_interval: 1.0
+
+# Laser range
+maxRange: 12.0
+maxUrange: 11.5
+minimumScore: 50
+
+# Particle filter
+particles: 30
+
+# Map extent / resolution
+delta: 0.05
+xmin: -20.0
+ymin: -20.0
+xmax: 20.0
+ymax: 20.0

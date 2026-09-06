@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Starts the arm joint controllers (PCA9685 over I2C) and the pan/tilt tower. -->
+  <arg name="left" default="true"/>
+  <arg name="right" default="true"/>
+  <arg name="tower" default="true"/>
+  <arg name="i2c_bus" default="1"/>
+  <arg name="i2c_address" default="64"/>   <!-- 0x40 -->
+
+  <node if="$(arg left)" pkg="companio_arms" type="left_arm_controller.py" name="left_arm_controller" output="screen">
+    <param name="i2c_bus" value="$(arg i2c_bus)"/>
+    <param name="i2c_address" value="$(arg i2c_address)"/>
+  </node>
+  <node if="$(arg right)" pkg="companio_arms" type="right_arm_controller.py" name="right_arm_controller" output="screen">
+    <param name="i2c_bus" value="$(arg i2c_bus)"/>
+    <param name="i2c_address" value="$(arg i2c_address)"/>
+  </node>
+  <node if="$(arg tower)" pkg="companio_arms" type="tower_controller.py" name="tower_controller" output="screen">
+    <param name="i2c_bus" value="$(arg i2c_bus)"/>
+    <param name="i2c_address" value="$(arg i2c_address)"/>
+  </node>
+</launch>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Navigation + arms + camera in one go (demo configuration). -->
+  <arg name="map_name" default="hospital_map"/>
+  <arg name="rviz" default="false"/>
+  <include file="$(find companio_bringup)/launch/navigation.launch">
+    <arg name="map_name" value="$(arg map_name)"/>
+    <arg name="rviz" value="$(arg rviz)"/>
+  </include>
+  <include file="$(find companio_arms)/launch/arms.launch"/>
+  <include file="$(find companio_bringup)/launch/camera.launch"/>
+</launch>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>companio_voice</name>
+  <version>1.0.0</version>
+  <description>Voice command interface for the Companio healthcare robot: spoken teleoperation and "go to room" navigation commands.</description>
+  <maintainer email="karansinhdesai04@gmail.com">Karansinh Desai</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>companio_msgs</depend>
+  <exec_depend>alsa-utils</exec_depend>
+</package>

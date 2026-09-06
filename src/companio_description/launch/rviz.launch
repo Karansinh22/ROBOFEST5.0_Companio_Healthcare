@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Opens RViz with one of the Companio views: mapping | navigation -->
+  <arg name="view" default="navigation"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find companio_description)/rviz/$(arg view).rviz" required="false"/>
+</launch>

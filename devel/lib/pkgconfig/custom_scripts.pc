@@ -1,8 +1,0 @@
-prefix=/root/BumbleBot_WS/devel
-
-Name: custom_scripts
-Description: Description of custom_scripts
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

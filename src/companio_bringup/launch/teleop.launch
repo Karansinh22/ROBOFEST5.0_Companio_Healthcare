@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Hardware bring-up + keyboard teleoperation (i/j/k/l/, keys in this terminal). -->
+  <include file="$(find companio_bringup)/launch/base.launch"/>
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_keyboard" output="screen"/>
+</launch>

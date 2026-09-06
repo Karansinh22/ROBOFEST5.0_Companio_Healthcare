@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>companio_navigation</name>
+  <version>1.0.0</version>
+  <description>
+    SLAM mapping, AMCL localisation, move_base navigation and the named-location
+    manager (save rooms while mapping, send the robot to them from RViz, the web
+    dashboard, the CLI or by voice) for the Companio healthcare robot.
+  </description>
+  <maintainer email="karansinhdesai04@gmail.com">Karansinh Desai</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>move_base_msgs</depend>
+  <depend>actionlib</depend>
+  <depend>tf</depend>
+  <depend>interactive_markers</depend>
+  <depend>companio_msgs</depend>
+  <exec_depend>gmapping</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>move_base</exec_depend>
+  <exec_depend>dwa_local_planner</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+</package>
