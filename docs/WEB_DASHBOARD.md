@@ -17,7 +17,7 @@ Open `http://<robot-ip>:8000` from the on-board touchscreen (`http://localhost:8
 | **Rooms** | list with **Go** / delete; click a name to rename; *Save current pose* |
 | **Manual drive** | hold the arrows (or W/A/S/D), speed sliders; releasing publishes a stop |
 | **Telemetry** | pose, velocity, nearest obstacle, laser rate, move_base state, uptime |
-| **Arms & tower** | joint sliders for both arms and the pan/tilt tower, *Home* presets (publishes `Float64MultiArray` to the controllers) |
+| **Arms & tower** | **Contract** / **Expand** buttons with the current posture state; joint sliders for both arms and the pan/tilt tower, *Home* presets (publishes `Float64MultiArray` to the controllers) |
 | **Camera** | live `/camera/color/image_raw/compressed` stream (needs `camera.launch`) |
 | **E-STOP** | zeroes `/cmd_vel` repeatedly and cancels every move_base goal |
 
@@ -25,7 +25,7 @@ Open `http://<robot-ip>:8000` from the on-board touchscreen (`http://localhost:8
 
 Subscribes: `/map` (png-compressed), `/robot_pose`, `/scan`, `/odom`, `/move_base/NavfnROS/plan`, `/locations/list`, `/navigation/status`, `/move_base/status`, `/camera/color/image_raw/compressed`.
 
-Publishes: `/cmd_vel`, `/move_base_simple/goal`, `/initialpose`, `/move_base/cancel`, `/left_arm/joint_commands`, `/right_arm/joint_commands`, `/tower/joint_commands`.
+Publishes: `/cmd_vel`, `/move_base_simple/goal`, `/initialpose`, `/move_base/cancel`, `/left_arm/joint_commands`, `/right_arm/joint_commands`, `/tower/joint_commands`, `/posture/command`.
 
 Services: `/locations/save`, `/locations/go_to`, `/locations/delete`, `/locations/rename`, `/locations/localize_at`, `/locations/cancel`.
 

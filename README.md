@@ -27,6 +27,7 @@ Companio is a compact (≈30 × 30 × 30 cm) mobile manipulator designed to assi
 | **Autonomous navigation** | AMCL localisation + move_base (DWA local planner) with dynamic obstacle avoidance and re-planning |
 | **Full control from RViz** | 2D Pose Estimate, 2D Nav Goal, *Publish Point → save room*, drag/rotate room markers, right-click a room → *Go here / Delete / Localize* |
 | **Web dashboard** | Live map, robot pose, laser, plan, rooms, navigation status, manual drive, arms, camera — any phone or laptop on the network |
+| **Contract / expand** | Rest posture: arms fold and the tower rotates so the whole robot fits in **30 × 30 × 30 cm**; expands back to the working posture on command (voice, dashboard, keyboard, service) |
 | **Dual robotic arms** | 2 × 4-DOF servo arms with grippers (PCA9685), joint limits, collision rules, analytic + numerical inverse kinematics, vision-triggered pick sequences |
 | **Voice control** | Spoken teleoperation and *"go to Ward A"* navigation commands |
 | **Line & zone following** | IR-sensor and camera-based line following with junction routing (QR codes), colour zone detection (safe / infection) |
@@ -183,7 +184,8 @@ Navigation status (`navigating → arrived / failed / cancelled`, distance left)
 
 ```bash
 ./scripts/start_arms.sh                                      # controllers
-./scripts/run.sh rosrun companio_arms arm_teleop.py          # keyboard arm control
+./scripts/run.sh rosrun companio_arms arm_teleop.py          # keyboard arm control (c = contract, x = expand)
+./scripts/run.sh rosservice call /posture/contract           # fold into the 30x30x30 cm rest posture
 ./scripts/run.sh roslaunch companio_bringup camera.launch    # RealSense colour stream
 ./scripts/run.sh roslaunch companio_bringup full_system.launch   # navigation + arms + camera
 ```
@@ -219,6 +221,7 @@ See [docs/WEB_DASHBOARD.md](docs/WEB_DASHBOARD.md).
 | `/navigation/status` | std_msgs/String (JSON, latched) | navigation state machine |
 | `/robot_pose` | geometry_msgs/PoseStamped | robot pose in the map frame |
 | `/left_arm/joint_commands`, `/right_arm/joint_commands`, `/tower/joint_commands` | std_msgs/Float64MultiArray | arm and tower joint targets (degrees) |
+| `/posture/contract`, `/posture/expand`, `/posture/command`, `/posture/state` | std_srvs/Trigger, std_msgs/String | rest posture (30 × 30 × 30 cm) ↔ working posture |
 
 ---
 

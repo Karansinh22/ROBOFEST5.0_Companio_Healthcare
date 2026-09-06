@@ -13,6 +13,8 @@ After selecting an arm, control it with:
   r/f : elbow up/down
   y/h : gripper open/close
 
+  c : Contract (rest posture, fits 30x30x30)
+  x : Expand (working posture)
   q : Quit
   ? : Show help
 """
@@ -21,7 +23,7 @@ import sys
 import termios
 import tty
 import rospy
-from std_msgs.msg import Float64MultiArray
+from std_msgs.msg import Float64MultiArray, String
 
 # Key bindings help text
 HELP = """
@@ -40,6 +42,8 @@ After selecting, control the currently active arm with:
   r/f : elbow up/down
   y/h : gripper open/close
 
+  c : Contract (rest posture, fits 30x30x30)
+  x : Expand (working posture)
   q : Quit
   ? : Show this help
 =============================================================
@@ -100,6 +104,7 @@ def main():
     
     # Publishers for both arms
     left_pub = rospy.Publisher('/left_arm/joint_commands', Float64MultiArray, queue_size=1)
+    posture_pub = rospy.Publisher('/posture/command', String, queue_size=1)
     right_pub = rospy.Publisher('/right_arm/joint_commands', Float64MultiArray, queue_size=1)
     
     # Wait for publishers to connect
@@ -168,6 +173,12 @@ def main():
             print_state(current_arm, state)
         
         # Help
+        elif key == 'c':
+            posture_pub.publish(String(data='contract'))
+            print('Contracting to rest posture ...')
+        elif key == 'x':
+            posture_pub.publish(String(data='expand'))
+            print('Expanding to working posture ...')
         elif key == '?':
             print(HELP)
         

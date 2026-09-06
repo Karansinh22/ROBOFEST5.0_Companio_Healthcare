@@ -165,6 +165,11 @@
     <details class="panel">
       <summary>Arms &amp; tower</summary>
       <div class="body sliders">
+        <div class="row" style="margin-top:0">
+          <button class="primary" id="contractBtn" title="Fold the arms and rotate the tower: the robot fits in 30x30x30 cm">⤓ Contract</button>
+          <button class="primary" id="expandBtn" title="Rotate the tower forward and deploy the arms">⤢ Expand</button>
+          <span class="muted">posture: <b id="postureState">unknown</b></span>
+        </div>
         <div class="muted">Left arm</div>
         <label>Shoulder <input type="range" data-arm="left" data-j="0" min="0" max="155" value="80"><span>80</span></label>
         <label>Arm <input type="range" data-arm="left" data-j="1" min="10" max="150" value="85"><span>85</span></label>
@@ -293,6 +298,8 @@
     topic('/left_arm/joint_commands', 'std_msgs/Float64MultiArray');
     topic('/right_arm/joint_commands', 'std_msgs/Float64MultiArray');
     topic('/tower/joint_commands', 'std_msgs/Float64MultiArray');
+    topic('/posture/command', 'std_msgs/String');
+    topic('/posture/state', 'std_msgs/String').subscribe((m) => { $('postureState').textContent = m.data; });
     // services
     service('/locations/save', 'companio_msgs/SaveLocation');
     service('/locations/delete', 'companio_msgs/LocationName');
@@ -509,6 +516,8 @@
   document.querySelectorAll('button[data-armhome]').forEach((b) => b.onclick = () => {
     const arm = b.dataset.armhome; document.querySelectorAll(`input[data-arm=${arm}]`).forEach((s, i) => { s.value = HOME[arm][i]; s.nextElementSibling.textContent = s.value; }); sendArm(arm, HOME[arm]);
   });
+  $('contractBtn').onclick = () => { const t = topics['/posture/command']; if (!t) return toast('Not connected'); t.publish(new ROSLIB.Message({data: 'contract'})); toast('Contracting to rest posture'); };
+  $('expandBtn').onclick = () => { const t = topics['/posture/command']; if (!t) return toast('Not connected'); t.publish(new ROSLIB.Message({data: 'expand'})); toast('Expanding to working posture'); };
   ['towerPan', 'towerTilt'].forEach((id) => $(id).oninput = () => $(id).nextElementSibling.textContent = $(id).value);
   $('towerSend').onclick = () => { const t = topics['/tower/joint_commands']; if (!t) return toast('Not connected');
     t.publish(new ROSLIB.Message({data: [parseFloat($('towerPan').value), parseFloat($('towerTilt').value)]})); };

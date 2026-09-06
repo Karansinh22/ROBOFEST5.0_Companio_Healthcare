@@ -7,6 +7,7 @@ Runs continuously until 'over' or 'exit' command
 
 import rospy
 from geometry_msgs.msg import Twist
+from std_msgs.msg import String
 import speech_recognition as sr
 import subprocess
 import os
@@ -18,6 +19,7 @@ class VoiceTeleop:
         
         # Publisher for cmd_vel
         self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.posture_pub = rospy.Publisher('/posture/command', String, queue_size=1)
         
         # Speed settings
         self.linear_speed = 0.3  # m/s
@@ -121,6 +123,17 @@ class VoiceTeleop:
             self.publish_velocity(0.0, 0.0)  # Stop robot
             return False  # Stop running
         
+        # Posture commands (rest posture fits 30x30x30 cm)
+        if 'contract' in command or 'fold' in command or 'rest position' in command:
+            rospy.loginfo("Contracting to rest posture")
+            self.publish_velocity(0.0, 0.0)
+            self.posture_pub.publish(String(data='contract'))
+            return True
+        if 'expand' in command or 'unfold' in command or 'deploy' in command:
+            rospy.loginfo("Expanding to working posture")
+            self.posture_pub.publish(String(data='expand'))
+            return True
+
         # Movement commands
         if 'forward' in command or 'ahead' in command or 'go' in command:
             rospy.loginfo("⬆️  Moving FORWARD")
@@ -166,7 +179,7 @@ class VoiceTeleop:
         rospy.loginfo("🎤 VOICE TELEOP STARTED - Listening for commands...")
         rospy.loginfo("="*60)
         rospy.loginfo("Say: 'forward', 'left', 'right', 'reverse', 'stop'")
-        rospy.loginfo("     'speed up', 'speed down', 'over' (to exit)")
+        rospy.loginfo("     'speed up', 'speed down', 'contract', 'expand', 'over' (to exit)")
         rospy.loginfo("="*60)
         
         rate = rospy.Rate(0.33)  # ~3 seconds per cycle

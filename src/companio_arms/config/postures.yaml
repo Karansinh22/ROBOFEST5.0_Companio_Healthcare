@@ -1,0 +1,28 @@
+# Whole-body postures for the Companio robot (all angles in degrees).
+#
+# expanded   : working posture - arms deployed in front of the base, tower facing forward.
+# contracted : rest posture   - arms tucked upward, tower rotated so the folded arms sit
+#              over the base; the whole robot then fits inside 30 x 30 x 30 cm.
+#
+# Joint order for the arms: [shoulder, arm, elbow, gripper]   (left limits 0-155 / 10-150 / 15-185 / 30-175,
+#                                                               right limits 0-150 / 0-150 / 5-160 / 30-175)
+# Tower: [pan, camera_tilt]
+#
+# Re-tune these values on the robot with `rosrun companio_arms arm_teleop.py` and
+# `rosrun companio_arms tower_teleop.py`, then paste the angles here.
+postures:
+  expanded:
+    left:  [80, 85, 95, 160]
+    right: [90, 90, 90, 160]
+    tower: [0, 90]
+  contracted:
+    left:  [10, 90, 180, 175]
+    right: [10, 90, 155, 175]
+    tower: [180, 90]
+
+# Sequencing
+# contract: arms fold first, then the tower rotates.  expand: tower first, then arms.
+settle_time: 1.0          # seconds added after each stage on top of the estimated travel time
+servo_deg_per_s: 20.0     # controllers move 5 deg every 0.25 s -> used to estimate travel time
+tolerance_deg: 4.0        # a stage is "done" when every joint is within this of its target
+stage_timeout: 25.0       # seconds before a stage is abandoned with an error

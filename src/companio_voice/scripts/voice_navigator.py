@@ -10,6 +10,8 @@ Spoken commands
   "go to <room>", "take me to <room>", "navigate to <room>"   -> /locations/go_to
   "go home"                                                    -> /locations/go_to Home
   "save this as <room>", "remember this as <room>"            -> /locations/save
+  "contract", "fold", "rest position"                          -> /posture/command contract (fits 30x30x30 cm)
+  "expand", "unfold", "deploy"                                 -> /posture/command expand
   "cancel", "stop", "halt"                                     -> cancel goal and stop motors
   "forward", "back", "left", "right"                           -> short manual motion
   "where are you"                                              -> reads the robot pose aloud in the log
@@ -48,6 +50,7 @@ class VoiceNavigator:
 
         self.recognizer = sr.Recognizer()
         self.cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
+        self.posture_pub = rospy.Publisher("/posture/command", String, queue_size=1)
         self.locations = []
         self.pose = None
         rospy.Subscriber("/locations/list", String, self._on_list)
@@ -107,6 +110,15 @@ class VoiceNavigator:
         if any(w in text for w in ("over", "exit", "quit")):
             self.drive(0.0, 0.0)
             return False
+        if any(w in text for w in ("contract", "fold", "rest position", "compact")):
+            self.drive(0.0, 0.0)
+            self.posture_pub.publish(String(data="contract"))
+            rospy.loginfo("Contracting to rest posture")
+            return True
+        if any(w in text for w in ("expand", "unfold", "deploy")):
+            self.posture_pub.publish(String(data="expand"))
+            rospy.loginfo("Expanding to working posture")
+            return True
         if any(w in text for w in ("stop", "cancel", "halt", "wait")):
             try:
                 self.cancel_srv()

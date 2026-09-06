@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(companio_arms)
-find_package(catkin REQUIRED COMPONENTS rospy std_msgs sensor_msgs)
+find_package(catkin REQUIRED COMPONENTS rospy std_msgs sensor_msgs std_srvs)
 catkin_package(CATKIN_DEPENDS rospy std_msgs sensor_msgs)
 
 catkin_install_python(PROGRAMS
@@ -18,6 +18,7 @@ catkin_install_python(PROGRAMS
   scripts/tower_controller.py
   scripts/tower_teleop.py
   scripts/gripper_vision_node.py
+  scripts/posture_controller.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
-install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+install(DIRECTORY launch config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

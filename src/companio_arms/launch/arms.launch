@@ -4,6 +4,7 @@
   <arg name="left" default="true"/>
   <arg name="right" default="true"/>
   <arg name="tower" default="true"/>
+  <arg name="posture" default="true"/>   <!-- contract / expand sequencer -->
   <arg name="i2c_bus" default="1"/>
   <arg name="i2c_address" default="64"/>   <!-- 0x40 -->
 
@@ -19,4 +20,5 @@
     <param name="i2c_bus" value="$(arg i2c_bus)"/>
     <param name="i2c_address" value="$(arg i2c_address)"/>
   </node>
+  <node if="$(arg posture)" pkg="companio_arms" type="posture_controller.py" name="posture_controller" output="screen"/>
 </launch>
